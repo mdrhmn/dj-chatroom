@@ -1,11 +1,11 @@
 # Django Real-Time Chatroom
 Repository for developing a real-time chatroom using Django Channels web socket and Redis. This side-project serves as a prototype/proof-of-concept for developing a real-time chatroom for mental health experts to communicate with Arduino smart watch users as part of my Final Year Project (FYP) titled 'Fitweet: Arduino-based Smart Watch for Early Anticipatory Anxiety Notification System'.
 
-![alt](https://im.ezgif.com/tmp/ezgif-1-2b3591833279.gif)
+![alt](https://imgur.com/wMgh8bJ.gif)
 
 ## Run Project Locally
 
-To run this app in your local environment, run the following preferably in a a virtual environment:
+To run this app in your local environment, run the following preferably in a virtual environment:
 
 ```
 pip install -r requirements.txt
