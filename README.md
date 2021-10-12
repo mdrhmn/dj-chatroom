@@ -21,21 +21,29 @@ Redis is used as a backing store for Channels. Like an in-memory cache.
 
 If you don't have Docker installed on your computer, you need to install it before you can continue. When you have Docker running, you can run this command to start the redis server:
 
-`docker run --name <CONTAINER_NAME> -p 6379:6379 -d redis`
+```
+docker run --name <CONTAINER_NAME> -p 6379:6379 -d redis
+```
 
 ### Using Homebrew (Mac)
 
 If you don’t have Homebrew, install it with the following command:
 
-`/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)`
+```
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)
+```
 
 Once Redis is installed using Homebrew, use Homebrew to launch it:
 
-`brew services start redis`
+```
+brew services start redis
+```
 
 To stop Redis using Homebrew:
 
-`brew services stop redis`
+```
+brew services stop redis
+```
 
 ## Building a Docker Image
 
