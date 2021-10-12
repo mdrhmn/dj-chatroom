@@ -65,3 +65,5 @@ The following shows the architecture of WebSockets using Django Channels:
    - The official documentation of Django Channels is used for future reference on deployment using NGINX, Redis and Daphne.
 3. [Deploy Django + Channels + Redis + Heroku + Daphne](https://www.youtube.com/watch?v=zizzeE4Obc0)
    - This YouTube tutorial together with its [GitHub repository](https://github.com/veryacademy/YT-Django-Heroku-Deploy-Channels-Daphne) provides a guide on how to deploy a Django-Channels-Redis-Daphne project on Heroku.
+4. [Deploying Docker on Heroku](https://www.youtube.com/watch?v=tTwGdUTR5h8)
+    - This YouTube tutorial guides on how to deploy a Docker containers in Heroku, should you decide to deploy it in that manner.
