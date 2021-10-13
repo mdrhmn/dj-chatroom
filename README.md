@@ -3,6 +3,16 @@ Repository for developing a real-time chatroom using Django Channels web socket 
 
 ![alt](https://imgur.com/wMgh8bJ.gif)
 
+## Features
+
+1. Real-time Chatroom
+   - Users can go to requested room and interact live with other users in the room
+   - Auto scroll to bottom of chat interface every time a new message is sent/received
+   - WhatsApp-inspired UI for message display together with datetime
+2. Real-time Online User Status
+   - Users can see the online statuses of other users (whether they have logged in or not) in real-time
+   - Colour-coded for emphasis
+
 ## Run Project Locally
 
 To run this app in your local environment, run the following preferably in a virtual environment:
@@ -91,3 +101,6 @@ The following shows the architecture of WebSockets using Django Channels:
    - This YouTube tutorial together with its [GitHub repository](https://github.com/veryacademy/YT-Django-Heroku-Deploy-Channels-Daphne) provides a guide on how to deploy a Django-Channels-Redis-Daphne project on Heroku.
 4. [Deploying Docker on Heroku](https://www.youtube.com/watch?v=tTwGdUTR5h8)
     - This YouTube tutorial guides on how to deploy a Docker containers in Heroku, should you decide to deploy it in that manner.
+5. [Django Channels - Updating the user’s online real-time status online](https://itzone.com.vn/en/article/django-channels-for-example-updating-the-users-online-real-time-status-online/)
+    - This extensive guide serves as the foundation for the asynchronous user login status feature of this project
+    - However, because the guide was written back in 2019, some of the code implementations are wrong and faulty. Necessary modifications were made to successfully run the project.
