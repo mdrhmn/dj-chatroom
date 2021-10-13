@@ -1,0 +1,11 @@
+{% for user in users %}
+{% if user.status == True %}
+<span class="tag is-success is-medium is-light">
+    {{user.user}}
+</span>
+{% else %}
+<span class="tag is-danger is-medium is-light">
+    {{user.user}}
+</span>
+{% endif %}
+{% endfor %}
