@@ -1,0 +1,44 @@
+{% load static crispy_forms_tags widget_tweaks %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>Chatty</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.2/css/bulma.min.css">
+</head>
+
+<body>
+    <section class="hero is-primary is-fullheight">
+        <div class="hero-body">
+            <div class="container">
+                <div class="columns is-centered">
+                    <div class="column is-5-tablet is-4-desktop is-3-widescreen">
+                        <form method="post" class="box">
+                            {% csrf_token%}
+                            <div class="field">
+                                <label for="" class="label">Username</label>
+                                <div class="control">
+                                    {{ form.username |add_class:'input'}}
+                                </div>
+                            </div>
+                            <div class="field">
+                                <label for="" class="label">Password</label>
+                                <div class="control">
+                                    {{ form.password |add_class:'input'}}
+                                </div>
+                            </div>
+                            <div class="field">
+                                <button type="submit" class="button is-success">
+                                    Login
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+
+</html>
