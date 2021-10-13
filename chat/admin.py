@@ -4,22 +4,25 @@ from .models import *
 # Register your models here.
 admin.site.register(Room)
 # admin.site.register(RoomUser)
+# admin.site.register(Message)
 
 @admin.register(Message)
 class Message(admin.ModelAdmin):
-    list_display = ('id', 'username', 'room', 'date_added',
+    list_display = ('id', 'user', 'room', 'date_added',
                     'content')
-    list_filter = ('username', 'room__name', 'date_added')
+    list_filter = ('user', 'room', 'date_added')
     ordering = ("id",)
 
     def get_name(self, obj):
         return obj.user
 
 @admin.register(RoomUser)
-class Message(admin.ModelAdmin):
-    list_display = ('id', 'room', 'username')
-    list_filter = ('username', 'room__name')
+class RoomUser(admin.ModelAdmin):
+    list_display = ('id', 'room', 'user')
+    list_filter = ('user', 'room')
     ordering = ("id",)
 
     def get_name(self, obj):
         return obj.user
+
+admin.site.register(Profile)
