@@ -13,6 +13,7 @@
         <div class="container">
             <div class="columns is-multiline">
                 <div class="column is-6 is-offset-3 mb-3">
+                    {% include "chat/includes/navbar.html" %}
                     <section class="hero is-primary">
                         <div class="hero-body">
                             <p class="title">
@@ -25,42 +26,22 @@
                     </section>
                 </div>
 
+                <div class="column is-6 is-offset-3">
+                    <div class="box">
+                        <strong>Online Users:</strong><br>
+                        <div id="user-status">
+                            {% include "chat/includes/user_status.html" %}
+                        </div>
+                    </div>
+                </div>
+
                 <div class="column is-4 is-offset-4">
-                    <!-- <div class="field">
-                        <label>Room name</label>
-
-                        <div class="control">
-                            <input class="input" type="text" placeholder="Room name" id="room-name-input" required>
-                        </div>
-                    </div>
-
-                    <div class="field">
-                        <label>Username</label>
-
-                        <div class="control">
-                            <input class="input" type="text" placeholder="Username" id="username-input" required>
-                        </div>
-                    </div>
-
-                    <div class="field">
-                        <div class="control">
-                            <button class="button is-info" type='submit' id="room-name-submit">Submit</button>
-                        </div>
-                    </div> -->
-
                     <form id="post-form" method="POST" action='{% url 'check_room' %}'>
                         {% csrf_token %}
                         <div class="field">
                             <label class="label">Room</label>
                             <div class="control">
                                 <input class="input" name="room" type="text" placeholder="Enter room name" required>
-                            </div>
-                        </div>
-
-                        <div class="field">
-                            <label class="label">Username</label>
-                            <div class="control">
-                                <input class="input" name="username" type="text" placeholder="Enter username" required>
                             </div>
                         </div>
 
@@ -74,17 +55,32 @@
             </div>
         </div>
     </section>
-
-    <!-- <script>
-        document.querySelector('#room-name-input').focus();
-
-        document.querySelector('#room-name-submit').onclick = function (e) {
-            var roomName = document.querySelector('#room-name-input').value;
-            var userName = document.querySelector('#username-input').value;
-
-            window.location.replace(roomName + '/?username=' + userName);
-        };
-    </script> -->
 </body>
+
+<script>
+    let endpoint = 'ws://' +
+        window.location.host +
+        '/ws/home/'
+
+    const statusSocket = new WebSocket(endpoint);
+
+    statusSocket.onopen = function (e) {
+        console.log("open", e);
+    }
+
+    statusSocket.onerror = function (e) {
+        console.log("error", e)
+    }
+
+    statusSocket.onclose = function (e) {
+        console.log("close", e)
+    }
+
+    statusSocket.onmessage = function (e) {
+        console.log("message", e)
+        const data = JSON.parse(e.data)
+        document.querySelector('#user-status').innerHTML = data.html_users
+    }
+</script>
 
 </html>
