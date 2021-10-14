@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-uqs+(7fn)@%_jt^2d=xfr@6(!ttzcb=i^-q)cr9!wh@exo^6=c
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1']
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -87,8 +87,19 @@ ASGI_APPLICATION = 'django_chat_channels_redis.asgi.application'
 
 CHANNEL_LAYERS = {
     'default': {
-        'BACKEND': 'channels_redis.core.RedisChannelLayer',
-        'CONFIG': {
+        # DO NOT USE IN PRODUCTION!
+        # In-memory channel layers operate with each process as a separate layer.
+        # This means that no cross-process messaging is possible.
+        # As the core value of channel layers is to provide distributed messaging,
+        # in-memory usage will result in sub-optimal performance,
+        # and ultimately data-loss in a multi-instance environment.
+        # 'BACKEND': 'channels.layers.InMemoryChannelLayer',
+
+        # channels_redis is the only official Django-maintained channel layer supported for production use.
+        # The layer uses Redis as its backing store, and supports both a single-server and sharded configurations,
+        # as well as group support. To use this layer you’ll need to install the channels_redis package.
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+                'CONFIG': {
             'hosts': [('127.0.0.1', 6379)],
         }
     }
