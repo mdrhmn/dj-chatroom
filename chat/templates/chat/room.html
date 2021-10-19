@@ -112,9 +112,9 @@
         const userName = JSON.parse(document.getElementById('json-username').textContent);
 
         const chatSocket = new WebSocket(
-            'ws://' +
+            'wss://' +
             window.location.host +
-            '/wss/chat/' +
+            '/ws/chat/' +
             roomName +
             '/'
         );
@@ -214,9 +214,9 @@
 
     <!-- SCRIPT FOR LOGIN STATUS WEB SOCKET -->
     <script>
-        let endpoint = 'ws://' +
+        let endpoint = 'wss://' +
             window.location.host +
-            '/wss/home/'
+            '/ws/home/'
 
         const statusSocket = new WebSocket(endpoint);
 
