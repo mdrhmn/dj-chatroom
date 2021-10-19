@@ -11,11 +11,12 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 from pathlib import Path
+import dj_database_url
+import django_heroku
 import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
@@ -26,7 +27,7 @@ SECRET_KEY = 'django-insecure-uqs+(7fn)@%_jt^2d=xfr@6(!ttzcb=i^-q)cr9!wh@exo^6=c
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['.herokuapp.com', '127.0.0.1']
 
 
 # Application definition
@@ -38,7 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    
+
     # Django Channels
     'channels',
 
@@ -85,25 +86,47 @@ TEMPLATES = [
 WSGI_APPLICATION = 'django_chat_channels_redis.wsgi.application'
 ASGI_APPLICATION = 'django_chat_channels_redis.asgi.application'
 
-CHANNEL_LAYERS = {
-    'default': {
-        # DO NOT USE IN PRODUCTION!
-        # In-memory channel layers operate with each process as a separate layer.
-        # This means that no cross-process messaging is possible.
-        # As the core value of channel layers is to provide distributed messaging,
-        # in-memory usage will result in sub-optimal performance,
-        # and ultimately data-loss in a multi-instance environment.
-        # 'BACKEND': 'channels.layers.InMemoryChannelLayer',
+if DEBUG:
+    CHANNEL_LAYERS = {
+        'default': {
+            # DO NOT USE IN PRODUCTION!
+            # In-memory channel layers operate with each process as a separate layer.
+            # This means that no cross-process messaging is possible.
+            # As the core value of channel layers is to provide distributed messaging,
+            # in-memory usage will result in sub-optimal performance,
+            # and ultimately data-loss in a multi-instance environment.
+            # 'BACKEND': 'channels.layers.InMemoryChannelLayer',
 
-        # channels_redis is the only official Django-maintained channel layer supported for production use.
-        # The layer uses Redis as its backing store, and supports both a single-server and sharded configurations,
-        # as well as group support. To use this layer you’ll need to install the channels_redis package.
-        "BACKEND": "channels_redis.core.RedisChannelLayer",
-                'CONFIG': {
-            'hosts': [('127.0.0.1', 6379)],
+            # channels_redis is the only official Django-maintained channel layer supported for production use.
+            # The layer uses Redis as its backing store, and supports both a single-server and sharded configurations,
+            # as well as group support. To use this layer you’ll need to install the channels_redis package.
+            "BACKEND": "channels_redis.core.RedisChannelLayer",
+            'CONFIG': {
+                'hosts': [('127.0.0.1', 6379)],
+            }
         }
     }
-}
+else:
+    CHANNEL_LAYERS = {
+        'default': {
+            # DO NOT USE IN PRODUCTION!
+            # In-memory channel layers operate with each process as a separate layer.
+            # This means that no cross-process messaging is possible.
+            # As the core value of channel layers is to provide distributed messaging,
+            # in-memory usage will result in sub-optimal performance,
+            # and ultimately data-loss in a multi-instance environment.
+            # 'BACKEND': 'channels.layers.InMemoryChannelLayer',
+
+            # channels_redis is the only official Django-maintained channel layer supported for production use.
+            # The layer uses Redis as its backing store, and supports both a single-server and sharded configurations,
+            # as well as group support. To use this layer you’ll need to install the channels_redis package.
+            "BACKEND": "channels_redis.core.RedisChannelLayer",
+            'CONFIG': {
+                "hosts": [os.environ.get('REDIS_URL', 'redis://localhost:6379')],
+            }
+        }
+    }
+
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
@@ -115,6 +138,14 @@ DATABASES = {
     }
 }
 
+# Heroku database configurations
+db_from_env = dj_database_url.config()
+DATABASES['default'].update(db_from_env)
+DATABASES['default']['CONN_MAX_AGE'] = 500
+
+django_heroku.settings(locals())
+options = DATABASES['default'].get('OPTIONS', {})
+options.pop('sslmode', None)
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
@@ -165,6 +196,7 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+X_FRAME_OPTIONS = 'SAMEORIGIN'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
